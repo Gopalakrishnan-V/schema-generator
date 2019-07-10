@@ -1,13 +1,153 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding-top: 10px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.column {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.chip {
+  color: white;
+  background-color: #2d81f7;
+  padding-left: 10px;
+  padding-right: 3px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 20px;
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+  border: 3px solid #00000000;
+}
+
+.chip-item {
+  background-color: #06be7f;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.chip-item-outlined {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #06be7f;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #06be7f;
+  font-weight: 700;
+}
+
+.chip-attributes-outlined {
+  background-color: white;
+  border: 1px solid #ff9832;
+  margin: 5px;
+  color: #ff9832;
+  font-weight: 700;
+}
+
+.chip-attributes {
+  background-color: #ff9832;
+  margin: 5px;
+}
+
+.span-title {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.down-arrow {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.items-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.hide {
+  display: none;
+}
+
+.partially-visible {
+  opacity: 0.5;
+}
+
+.section-title {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #d3d6dc;
+}
+
+.screens-list-item {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.item-selected {
+  color: #2d81f7;
+  font-weight: 700;
+}
+
+.trash-icon {
+  margin-left: 5px !important;
+  cursor: auto;
+}
+
+.attribute-trash-icon {
+  margin-right: -2px;
+  cursor: auto;
+}
+
+.m0 {
+  margin: 0px !important;
+}
+
+.attribute-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.chip-cross-icon {
+  background: white;
+  font-size: 8px;
+  cursor: auto;
+  margin-left: 10px !important;
+}
+
+.event-color {
+  color: #3c4852 !important;
+}
+
+.chip-text-span {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.pointer {
+  cursor: pointer;
 }

@@ -1,0 +1,30 @@
+const screens = [
+  "Home",
+  "Plus",
+  "Schedule",
+  "MyLibrary",
+  "Account",
+  "EducatorProfile",
+  "Schedule",
+  "MyLibrary",
+  "Account",
+  "EducatorProfile",
+  "Schedule",
+  "MyLibrary",
+  "Account",
+  "EducatorProfile",
+  "Schedule",
+  "MyLibrary",
+  "Account",
+  "EducatorProfile",
+  "Schedule",
+  "MyLibrary",
+  "Account",
+  "EducatorProfile",
+  "Schedule",
+  "MyLibrary",
+  "Account",
+  "EducatorProfile"
+];
+
+export default screens;
