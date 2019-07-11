@@ -53,9 +53,9 @@ export class ScreensList extends Component {
               >
                 <div className="screens-list-item">
                   <div>{item}</div>
-                  <div>
+                  {/* <div>
                     <Icon name="edit" />
-                  </div>
+                  </div> */}
                 </div>
                 <div className="divider" />
               </div>

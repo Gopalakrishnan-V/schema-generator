@@ -3,6 +3,7 @@ import schemaMain from "../helpers/data";
 import _ from "lodash";
 import ScreensList from "../components/ScreensList";
 import { Input, Icon, Button, Modal, Header } from "semantic-ui-react";
+import MainScreenHeader from "../components/MainScreenHeader";
 const ADD = "__add__";
 
 export class MainScreen extends Component {
@@ -499,225 +500,57 @@ export class MainScreen extends Component {
     const levelsCount = this.getLevelsCount();
 
     return (
-      <div className="row">
-        {this.renderAddItemModal()}
-        {this.renderDeleteModal()}
-        {this.renderAddEventModal()}
-        {this.renderAddAttributeModal()}
-        <div
-          className="column"
-          style={{
-            flex: "7",
-            paddingTop: 20,
-            paddingLeft: 50,
-            paddingRight: 50,
-            overflowY: "scroll",
-            height: "calc(100vh)"
-          }}
-        >
-          {levelsCount === 0 ? (
-            <div
-              className="column"
-              style={{
-                height: "100%",
-                justifyContent: "center",
-                paddingBottom: 200
-              }}
-            >
-              <Header as="h2" icon>
-                <Icon name="settings" loading style={{ marginBottom: 40 }} />
-                UI Events Schema Genarator Tool
-                <Header.Subheader style={{ marginTop: 10 }}>
-                  Select a screen from the options to continue...
-                </Header.Subheader>
-              </Header>
-            </div>
-          ) : null}
-          {levelsCount > 0 && (
-            <div
-              key={0}
-              className="chip"
-              style={{ paddingLeft: 12, paddingRight: 12 }}
-              onClick={() => this.setState({ currentPath: name })}
-            >
-              <span>{name}</span>
-            </div>
-          )}
+      <div className="column">
+        <MainScreenHeader />
+        <div className="row" style={{ width: "100%" }}>
+          {this.renderAddItemModal()}
+          {this.renderDeleteModal()}
+          {this.renderAddEventModal()}
+          {this.renderAddAttributeModal()}
 
-          {levelsCount > 0 ? (
-            <div className="column section-title">
-              <span className="span-title">Item Types</span>
-              <img
-                width="20px"
-                height="20px"
-                src="https://image.flaticon.com/icons/svg/118/118738.svg"
-                className="down-arrow"
-                alt=""
-              />
-            </div>
-          ) : null}
+          <div
+            className="column"
+            style={{
+              flex: 7,
+              paddingTop: 20,
+              paddingLeft: 50,
+              paddingRight: 50,
+              overflowY: "scroll",
+              height: "calc(100vh)"
+            }}
+          >
+            {levelsCount === 0 ? (
+              <div
+                className="column"
+                style={{
+                  height: "100%",
+                  justifyContent: "center",
+                  paddingBottom: 200
+                }}
+              >
+                <Header as="h2" icon>
+                  <Icon name="settings" loading style={{ marginBottom: 40 }} />
+                  UI Events Schema Genarator Tool
+                  <Header.Subheader style={{ marginTop: 10 }}>
+                    Select a screen from the options to continue...
+                  </Header.Subheader>
+                </Header>
+              </div>
+            ) : null}
+            {levelsCount > 0 && (
+              <div
+                key={0}
+                className="chip"
+                style={{ paddingLeft: 12, paddingRight: 12 }}
+                onClick={() => this.setState({ currentPath: name })}
+              >
+                <span>{name}</span>
+              </div>
+            )}
 
-          <div className="items-container">
-            {levelsCount >= 1 &&
-              [
-                ...Object.keys(_.get(schema, this.getPathUptoLevel(1))),
-                ADD
-              ].map((item, index) => {
-                const selected = currentPathSplitted.includes(item);
-                return item !== ADD ? (
-                  <div
-                    className={`chip chip-item ${
-                      selected ? "highlighted" : "partially-visible"
-                    }`}
-                    key={index}
-                  >
-                    <span
-                      className="chip-text-span"
-                      onClick={() => {
-                        this.handleItemOnClick(item);
-                      }}
-                    >
-                      {_.startCase(item)}
-                    </span>
-                    <Icon
-                      name="close"
-                      className="chip-cross-icon"
-                      circular
-                      style={{ color: "#06be7f", fontSize: 12 }}
-                      onClick={() => {
-                        this.setState({
-                          showModalType: "delete",
-                          modalsData: {
-                            ...modalsData,
-                            delete: {
-                              ...modalsData.delete,
-                              deleteEntity: "item",
-                              itemKey: item
-                            }
-                          }
-                        });
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <div
-                    className="chip chip-item-outlined"
-                    key={index}
-                    style={{
-                      paddingLeft: 15,
-                      paddingRight: 10,
-                      paddingTop: 10,
-                      paddingBottom: 10
-                    }}
-                    onClick={() => {
-                      this.setState({
-                        showModalType: "addItem",
-                        modalsData: {
-                          ...modalsData,
-                          addItem: { itemKey: "" }
-                        }
-                      });
-                    }}
-                  >
-                    <span style={{ marginTop: -2 }}>ADD</span>
-                    <Icon
-                      name="plus"
-                      style={{ marginLeft: 5, marginTop: -5 }}
-                    />
-                  </div>
-                );
-              })}
-          </div>
-
-          {levelsCount >= 2 && (
-            <div className="column section-title">
-              <span className="span-title">Event Types</span>
-              <img
-                width="20px"
-                height="20px"
-                src="https://image.flaticon.com/icons/svg/118/118738.svg"
-                className="down-arrow"
-                alt=""
-              />
-            </div>
-          )}
-
-          <div className="items-container">
-            {levelsCount >= 2 &&
-              [
-                ...Object.keys(_.get(schema, this.getPathUptoLevel(2))),
-                ADD
-              ].map((item, index) => {
-                const selected = currentPathSplitted.includes(item);
-                return item !== ADD ? (
-                  <div
-                    className={`chip chip-item ${
-                      selected ? "highlighted" : "partially-visible"
-                    }`}
-                    style={{ backgroundColor: "#3c4852" }}
-                    key={index}
-                  >
-                    <span
-                      className="chip-text-span"
-                      onClick={() => this.handleEventOnClick(item)}
-                    >
-                      {_.startCase(item)}
-                    </span>
-                    <Icon
-                      name="close"
-                      className="chip-cross-icon event-color"
-                      circular
-                      style={{ color: "#06be7f", fontSize: 12 }}
-                      onClick={() => {
-                        this.setState({
-                          showModalType: "delete",
-                          modalsData: {
-                            ...modalsData,
-                            delete: {
-                              ...modalsData.delete,
-                              deleteEntity: "event",
-                              eventKey: item
-                            }
-                          }
-                        });
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <div
-                    className="chip chip-item-outlined event-color"
-                    key={index}
-                    style={{
-                      paddingLeft: 15,
-                      paddingRight: 10,
-                      paddingTop: 10,
-                      paddingBottom: 10,
-                      border: "1px solid #3c4852"
-                    }}
-                    onClick={() => {
-                      this.setState({
-                        showModalType: "addEvent",
-                        modalsData: {
-                          ...modalsData,
-                          addEvent: { name: "", eventKey: "" }
-                        }
-                      });
-                    }}
-                  >
-                    <span style={{ marginTop: -2 }}>ADD</span>
-                    <Icon
-                      name="plus"
-                      style={{ marginLeft: 5, marginTop: -5 }}
-                    />
-                  </div>
-                );
-              })}
-          </div>
-
-          {levelsCount >= 3 && (
-            <div className="row">
+            {levelsCount > 0 ? (
               <div className="column section-title">
-                <span className="span-title">Attributes</span>
+                <span className="span-title">Item Types</span>
                 <img
                   width="20px"
                   height="20px"
@@ -726,51 +559,35 @@ export class MainScreen extends Component {
                   alt=""
                 />
               </div>
-            </div>
-          )}
+            ) : null}
 
-          <div className="items-container">
-            {levelsCount >= 3 &&
-              [
-                ...Object.keys(_.get(schema, this.getPathUptoLevel(4))),
-                ADD
-              ].map((item, index) => {
-                return item !== ADD ? (
-                  <div
-                    style={{
-                      width: 200,
-                      height: 200,
-                      margin: 5,
-                      border: "1px solid #d3d6dc",
-                      borderRadius: 5
-                    }}
-                    className="column"
-                    key={index}
-                  >
+            <div className="items-container">
+              {levelsCount >= 1 &&
+                [
+                  ...Object.keys(_.get(schema, this.getPathUptoLevel(1))),
+                  ADD
+                ].map((item, index) => {
+                  const selected = currentPathSplitted.includes(item);
+                  return item !== ADD ? (
                     <div
-                      style={{
-                        width: "100%",
-                        paddingTop: 10,
-                        paddingBottom: 10,
-                        paddingLeft: 10,
-                        paddingRight: 5,
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center"
-                      }}
+                      className={`chip chip-item ${
+                        selected ? "highlighted" : "partially-visible"
+                      }`}
+                      key={index}
                     >
-                      <span className="m0 attribute-title">
-                        {_.startCase(item).trim()}
+                      <span
+                        className="chip-text-span"
+                        onClick={() => {
+                          this.handleItemOnClick(item);
+                        }}
+                      >
+                        {_.startCase(item)}
                       </span>
                       <Icon
-                        name="trash alternate"
-                        style={{
-                          color: "black",
-                          marginRight: "-3px",
-                          opacity: 0.6,
-                          cursor: "pointer"
-                        }}
+                        name="close"
+                        className="chip-cross-icon"
+                        circular
+                        style={{ color: "#06be7f", fontSize: 12 }}
                         onClick={() => {
                           this.setState({
                             showModalType: "delete",
@@ -778,104 +595,292 @@ export class MainScreen extends Component {
                               ...modalsData,
                               delete: {
                                 ...modalsData.delete,
-                                deleteEntity: "attribute",
-                                attributeKey: item
+                                deleteEntity: "item",
+                                itemKey: item
                               }
                             }
                           });
                         }}
                       />
                     </div>
-
+                  ) : (
                     <div
-                      className="divider"
-                      style={{ marginTop: 5, marginBottom: 5 }}
-                    />
+                      className="chip chip-item-outlined"
+                      key={index}
+                      style={{
+                        paddingLeft: 15,
+                        paddingRight: 10,
+                        paddingTop: 10,
+                        paddingBottom: 10
+                      }}
+                      onClick={() => {
+                        this.setState({
+                          showModalType: "addItem",
+                          modalsData: {
+                            ...modalsData,
+                            addItem: { itemKey: "" }
+                          }
+                        });
+                      }}
+                    >
+                      <span style={{ marginTop: -2 }}>ADD</span>
+                      <Icon
+                        name="plus"
+                        style={{ marginLeft: 5, marginTop: -5 }}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
 
+            {levelsCount >= 2 && (
+              <div className="column section-title">
+                <span className="span-title">Event Types</span>
+                <img
+                  width="20px"
+                  height="20px"
+                  src="https://image.flaticon.com/icons/svg/118/118738.svg"
+                  className="down-arrow"
+                  alt=""
+                />
+              </div>
+            )}
+
+            <div className="items-container">
+              {levelsCount >= 2 &&
+                [
+                  ...Object.keys(_.get(schema, this.getPathUptoLevel(2))),
+                  ADD
+                ].map((item, index) => {
+                  const selected = currentPathSplitted.includes(item);
+                  return item !== ADD ? (
                     <div
-                      style={{ padding: 5, marginTop: 2 }}
-                      className="column"
+                      className={`chip chip-item ${
+                        selected ? "highlighted" : "partially-visible"
+                      }`}
+                      style={{ backgroundColor: "#3c4852" }}
+                      key={index}
                     >
                       <span
+                        className="chip-text-span"
+                        onClick={() => this.handleEventOnClick(item)}
+                      >
+                        {_.startCase(item)}
+                      </span>
+                      <Icon
+                        name="close"
+                        className="chip-cross-icon event-color"
+                        circular
+                        style={{ color: "#06be7f", fontSize: 12 }}
+                        onClick={() => {
+                          this.setState({
+                            showModalType: "delete",
+                            modalsData: {
+                              ...modalsData,
+                              delete: {
+                                ...modalsData.delete,
+                                deleteEntity: "event",
+                                eventKey: item
+                              }
+                            }
+                          });
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      className="chip chip-item-outlined event-color"
+                      key={index}
+                      style={{
+                        paddingLeft: 15,
+                        paddingRight: 10,
+                        paddingTop: 10,
+                        paddingBottom: 10,
+                        border: "1px solid #3c4852"
+                      }}
+                      onClick={() => {
+                        this.setState({
+                          showModalType: "addEvent",
+                          modalsData: {
+                            ...modalsData,
+                            addEvent: { name: "", eventKey: "" }
+                          }
+                        });
+                      }}
+                    >
+                      <span style={{ marginTop: -2 }}>ADD</span>
+                      <Icon
+                        name="plus"
+                        style={{ marginLeft: 5, marginTop: -5 }}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
+
+            {levelsCount >= 3 && (
+              <div className="row">
+                <div className="column section-title">
+                  <span className="span-title">Attributes</span>
+                  <img
+                    width="20px"
+                    height="20px"
+                    src="https://image.flaticon.com/icons/svg/118/118738.svg"
+                    className="down-arrow"
+                    alt=""
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="items-container">
+              {levelsCount >= 3 &&
+                [
+                  ...Object.keys(_.get(schema, this.getPathUptoLevel(4))),
+                  ADD
+                ].map((item, index) => {
+                  return item !== ADD ? (
+                    <div
+                      style={{
+                        width: 200,
+                        height: 200,
+                        margin: 5,
+                        border: "1px solid #d3d6dc",
+                        borderRadius: 5
+                      }}
+                      className="column"
+                      key={index}
+                    >
+                      <div
                         style={{
-                          fontSize: "smaller",
-                          alignSelf: "flex-start",
-                          marginLeft: 2
+                          width: "100%",
+                          paddingTop: 10,
+                          paddingBottom: 10,
+                          paddingLeft: 10,
+                          paddingRight: 5,
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center"
                         }}
                       >
-                        Context
-                      </span>
-                      <Input
-                        placeholder="Context"
-                        value={_.get(schema, currentPath)[item].context}
-                        onChange={(event, { value: newValue }) => {
-                          this.handleAttributesValueChange(
-                            item,
-                            "context",
-                            newValue
-                          );
-                        }}
+                        <span className="m0 attribute-title">
+                          {_.startCase(item).trim()}
+                        </span>
+                        <Icon
+                          name="trash alternate"
+                          style={{
+                            color: "black",
+                            marginRight: "-3px",
+                            opacity: 0.6,
+                            cursor: "pointer"
+                          }}
+                          onClick={() => {
+                            this.setState({
+                              showModalType: "delete",
+                              modalsData: {
+                                ...modalsData,
+                                delete: {
+                                  ...modalsData.delete,
+                                  deleteEntity: "attribute",
+                                  attributeKey: item
+                                }
+                              }
+                            });
+                          }}
+                        />
+                      </div>
+
+                      <div
+                        className="divider"
+                        style={{ marginTop: 5, marginBottom: 5 }}
                       />
 
-                      <span
-                        style={{
-                          fontSize: "smaller",
-                          alignSelf: "flex-start",
-                          marginTop: 10,
-                          marginLeft: 2
-                        }}
+                      <div
+                        style={{ padding: 5, marginTop: 2 }}
+                        className="column"
                       >
-                        Key
-                      </span>
-                      <Input
-                        placeholder="Key"
-                        value={_.get(schema, currentPath)[item].key}
-                        onChange={(event, { value: newValue }) => {
-                          this.handleAttributesValueChange(
-                            item,
-                            "key",
-                            newValue
-                          );
-                        }}
-                      />
+                        <span
+                          style={{
+                            fontSize: "smaller",
+                            alignSelf: "flex-start",
+                            marginLeft: 2
+                          }}
+                        >
+                          Context
+                        </span>
+                        <Input
+                          placeholder="Context"
+                          value={_.get(schema, currentPath)[item].context}
+                          onChange={(event, { value: newValue }) => {
+                            this.handleAttributesValueChange(
+                              item,
+                              "context",
+                              newValue
+                            );
+                          }}
+                        />
+
+                        <span
+                          style={{
+                            fontSize: "smaller",
+                            alignSelf: "flex-start",
+                            marginTop: 10,
+                            marginLeft: 2
+                          }}
+                        >
+                          Key
+                        </span>
+                        <Input
+                          placeholder="Key"
+                          value={_.get(schema, currentPath)[item].key}
+                          onChange={(event, { value: newValue }) => {
+                            this.handleAttributesValueChange(
+                              item,
+                              "key",
+                              newValue
+                            );
+                          }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div
-                    onClick={() => {
-                      this.setState({
-                        showModalType: "addAttribute",
-                        modalsData: {
-                          ...modalsData,
-                          addAttribute: { name: "", context: "", key: "" }
-                        }
-                      });
-                    }}
-                    style={{
-                      width: 200,
-                      height: 200,
-                      margin: 5,
-                      border: "1px solid #d3d6dc",
-                      borderRadius: 5,
-                      justifyContent: "center",
-                      cursor: "pointer"
-                    }}
-                    className="column"
-                    key={index}
-                  >
-                    <div>
-                      <Icon name="plus" />
-                      <span className="attribute-title">ADD &nbsp;</span>
+                  ) : (
+                    <div
+                      onClick={() => {
+                        this.setState({
+                          showModalType: "addAttribute",
+                          modalsData: {
+                            ...modalsData,
+                            addAttribute: { name: "", context: "", key: "" }
+                          }
+                        });
+                      }}
+                      style={{
+                        width: 200,
+                        height: 200,
+                        margin: 5,
+                        border: "1px solid #d3d6dc",
+                        borderRadius: 5,
+                        justifyContent: "center",
+                        cursor: "pointer"
+                      }}
+                      className="column"
+                      key={index}
+                    >
+                      <div>
+                        <Icon name="plus" />
+                        <span className="attribute-title">ADD &nbsp;</span>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+            </div>
           </div>
+          <ScreensList
+            style={{ flex: 1.5, overflowY: "scroll", height: "calc(100vh)" }}
+            handleScreenSelect={this.handleScreenSelect}
+          />
         </div>
-        <ScreensList
-          style={{ flex: "1.5", overflowY: "scroll", height: "calc(100vh)" }}
-          handleScreenSelect={this.handleScreenSelect}
-        />
       </div>
     );
   }
